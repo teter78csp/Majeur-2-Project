@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-data-deployment
+  namespace: project
+  labels:
+    app: user-data
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-data-pod
+  template:
+    metadata:
+      labels:
+        app: user-data-pod
+    spec:
+      containers:
+      - name: user-data-cont
+        image: redis
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "5000m"
+        ports:
+        - containerPort: 6379
+      restartPolicy: Always

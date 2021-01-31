@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-deployment
+  namespace: project
+  labels:
+    app: web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: web-pod
+  template:
+    metadata:
+      labels:
+        app: web-pod
+    spec:
+      containers:
+      - name: web-cont
+        image: bart120/yv-web:1
+        resources:
+          limits:
+            memory: "1024Mi"
+            cpu: "9000m"
+        ports:
+        - containerPort: 80
+      restartPolicy: Always
